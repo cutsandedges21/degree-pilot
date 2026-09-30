@@ -3034,7 +3034,7 @@ git commit -m "feat(eval): prefill and check gold labels" -m "Co-Authored-By: Cl
 - Create: `model/eval/intake.py`
 - Test: `model/tests/test_intake.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_intake.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_intake.py`
 
 ```python
 import json
@@ -3096,12 +3096,12 @@ def test_intake_pdf_extracts_text(tmp_path):
     assert (doc / "text.txt").read_text(encoding="utf-8").strip() == "ECON 101 Principles"
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_intake.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.intake'`
 
-- [ ] **Step 3: Write `model/eval/intake.py`**
+- [x] **Step 3: Write `model/eval/intake.py`**
 
 ```python
 """Add a test document: python -m model.eval.intake <family> <path-or-url> [--id ID] [--note TEXT]
@@ -3191,17 +3191,17 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_intake.py -v`
 Expected: 3 passed (the PDF test needs Task 20's `npm install`)
 
-- [ ] **Step 5: Run everything**
+- [x] **Step 5: Run everything**
 
 Run: `.venv/Scripts/python -m pytest -q && (cd tools/pdftext && npm test)`
 Expected: `90 passed`, then `pass 5`
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add model/eval/intake.py model/tests/test_intake.py
