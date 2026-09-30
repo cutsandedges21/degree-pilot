@@ -1,0 +1,11 @@
+{
+  "name": "degreepilot-pdftext",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^6.3.289"
+  }
+}

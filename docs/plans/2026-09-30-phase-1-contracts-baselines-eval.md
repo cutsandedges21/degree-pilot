@@ -2664,7 +2664,7 @@ documents) go through the same code. `lines.mjs` is pure so the app can import i
 - Create: `tools/pdftext/package.json`, `tools/pdftext/lines.mjs`, `tools/pdftext/extract.mjs`
 - Test: `tools/pdftext/lines.test.mjs`, `tools/pdftext/extract.test.mjs`
 
-- [ ] **Step 1: Create the package and install pdf.js**
+- [x] **Step 1: Create the package and install pdf.js**
 
 `tools/pdftext/package.json`:
 
@@ -2683,7 +2683,7 @@ cd tools/pdftext && npm install pdfjs-dist && cd ../..
 
 Expected: `added N packages`; `package.json` now lists `pdfjs-dist` under dependencies.
 
-- [ ] **Step 2: Write the failing tests**
+- [x] **Step 2: Write the failing tests**
 
 `tools/pdftext/lines.test.mjs`:
 
@@ -2751,12 +2751,12 @@ test('a PDF with no text gives an empty string', async () => {
 })
 ```
 
-- [ ] **Step 3: Run them to see them fail**
+- [x] **Step 3: Run them to see them fail**
 
 Run: `cd tools/pdftext && npm test; cd ../..`
 Expected: FAIL, `Cannot find module ... lines.mjs`
 
-- [ ] **Step 4: Write `tools/pdftext/lines.mjs`**
+- [x] **Step 4: Write `tools/pdftext/lines.mjs`**
 
 ```js
 // pdf.js text items -> lines of text. Pure, so the browser app can reuse it unchanged.
@@ -2796,7 +2796,7 @@ export function itemsToLines(items) {
 }
 ```
 
-- [ ] **Step 5: Write `tools/pdftext/extract.mjs`**
+- [x] **Step 5: Write `tools/pdftext/extract.mjs`**
 
 ```js
 // Usage: node tools/pdftext/extract.mjs <file.pdf>
@@ -2809,15 +2809,20 @@ import { itemsToLines } from './lines.mjs'
 GlobalWorkerOptions.workerSrc = import.meta.resolve('pdfjs-dist/legacy/build/pdf.worker.mjs')
 
 export async function pdfToText(data) {
-  const doc = await getDocument({ data, verbosity: 0, isEvalSupported: false }).promise
-  const pages = []
-  for (let number = 1; number <= doc.numPages; number++) {
-    const page = await doc.getPage(number)
-    const content = await page.getTextContent()
-    pages.push(itemsToLines(content.items).join('\n'))
+  // pdf.js 6 frees a document through its loading task, not the document itself.
+  const task = getDocument({ data, verbosity: 0, isEvalSupported: false })
+  try {
+    const doc = await task.promise
+    const pages = []
+    for (let number = 1; number <= doc.numPages; number++) {
+      const page = await doc.getPage(number)
+      const content = await page.getTextContent()
+      pages.push(itemsToLines(content.items).join('\n'))
+    }
+    return pages.filter((page) => page).join('\n')
+  } finally {
+    await task.destroy()
   }
-  await doc.destroy()
-  return pages.filter((page) => page).join('\n')
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -2835,12 +2840,12 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
 }
 ```
 
-- [ ] **Step 6: Run the tests to see them pass**
+- [x] **Step 6: Run the tests to see them pass**
 
 Run: `cd tools/pdftext && npm test; cd ../..`
-Expected: `# pass 5`, `# fail 0`. pdf.js may print a warning about `DOMMatrix` or canvas on stderr; text extraction doesn't need them.
+Expected: `pass 5`, `fail 0`. pdf.js may print a warning about `DOMMatrix` or canvas on stderr; text extraction doesn't need them.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 `node_modules/` is already gitignored; commit the lockfile.
 
@@ -3194,7 +3199,7 @@ Expected: 3 passed (the PDF test needs Task 20's `npm install`)
 - [ ] **Step 5: Run everything**
 
 Run: `.venv/Scripts/python -m pytest -q && (cd tools/pdftext && npm test)`
-Expected: `90 passed`, then `# pass 5`
+Expected: `90 passed`, then `pass 5`
 
 - [ ] **Step 6: Commit**
 
