@@ -2476,7 +2476,7 @@ number with its 95% interval and the spec's bar (J1 code and grade 0.95, other J
 - Create: `model/eval/__main__.py`
 - Test: `model/tests/test_eval_cli.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_eval_cli.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_eval_cli.py`
 
 ```python
 from model.eval.__main__ import main
@@ -2502,12 +2502,12 @@ def test_empty_testset_says_so(tmp_path, capsys):
     assert "no labelled documents yet" in out
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_eval_cli.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.__main__'`
 
-- [ ] **Step 3: Write `model/eval/__main__.py`**
+- [x] **Step 3: Write `model/eval/__main__.py`**
 
 ```python
 """Scorecard: python -m model.eval --solver baseline [--testsets PATH] [--samples N]"""
@@ -2636,17 +2636,17 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_eval_cli.py -v`
 Expected: 2 passed
 
-- [ ] **Step 5: Run the whole suite**
+- [x] **Step 5: Run the whole suite**
 
 Run: `.venv/Scripts/python -m pytest -q`
 Expected: 83 passed
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add model/eval/__main__.py model/tests/test_eval_cli.py
