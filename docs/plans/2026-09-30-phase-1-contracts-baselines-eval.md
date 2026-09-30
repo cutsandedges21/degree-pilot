@@ -2130,7 +2130,7 @@ git commit -m "feat(eval): score J1 per record field" -m "Co-Authored-By: Claude
 - Create: `model/eval/score_j2.py`
 - Test: `model/tests/test_score_j2.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_score_j2.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_score_j2.py`
 
 ```python
 from model.eval.score_j2 import J2Result, score_j2
@@ -2160,12 +2160,12 @@ def test_results_add_up():
     assert (total.items, total.counts.tp, total.counts.fn) == (2, 1, 1)
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_score_j2.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.score_j2'`
 
-- [ ] **Step 3: Write `model/eval/score_j2.py`**
+- [x] **Step 3: Write `model/eval/score_j2.py`**
 
 ```python
 """J2 scoring: compare tag keys per item. Skill ids and tools count; quotes don't."""
@@ -2197,12 +2197,12 @@ def score_j2(predicted_text: str, gold_tags: list[Tag], item: Item, taxonomy: Ta
     return J2Result(Counts(len(p & g), len(p - g), len(g - p)), 1, bad)
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_score_j2.py -v`
 Expected: 3 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/eval/score_j2.py model/tests/test_score_j2.py
