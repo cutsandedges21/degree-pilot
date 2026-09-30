@@ -467,7 +467,7 @@ git commit -m "feat(jobs): add the J1 record format and copy rule" -m "Co-Author
 - Create: `contracts/skills.json`, `model/jobs/skills.py`
 - Test: `model/tests/test_skills.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_skills.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_skills.py`
 
 ```python
 import pytest
@@ -510,12 +510,12 @@ def test_rejects_uppercase_keywords():
         parse_taxonomy(_raw("a", keyword="Excel"))
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_skills.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.jobs.skills'`
 
-- [ ] **Step 3: Write `contracts/skills.json`**
+- [x] **Step 3: Write `contracts/skills.json`**
 
 Keywords are whole words or phrases, lowercase. The J2 baseline matches them; the model
 learns the skill ids.
@@ -571,7 +571,7 @@ learns the skill ids.
 }
 ```
 
-- [ ] **Step 4: Write `model/jobs/skills.py`**
+- [x] **Step 4: Write `model/jobs/skills.py`**
 
 ```python
 """The skill taxonomy J2 tags against, loaded from contracts/skills.json."""
@@ -626,12 +626,12 @@ def load_taxonomy() -> Taxonomy:
     return parse_taxonomy(json.loads((CONTRACTS_DIR / "skills.json").read_text(encoding="utf-8")))
 ```
 
-- [ ] **Step 5: Run it to see it pass**
+- [x] **Step 5: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_skills.py -v`
 Expected: 6 passed
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add contracts/skills.json model/jobs/skills.py model/tests/test_skills.py
