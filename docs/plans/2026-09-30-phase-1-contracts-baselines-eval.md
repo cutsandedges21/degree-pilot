@@ -3243,9 +3243,9 @@ résumé as PDF, then:
 .venv/Scripts/python -m model.eval.intake transcript "C:/path/to/transcript.pdf" --id moss-vanier
 ```
 
-> **Status (2026-09-30):** 15 public documents are in `data/testsets/` with draft `gold.j1` files (5 résumés, 8 York syllabi, 2 transcript samples). Next is Moss: add their own transcript and résumé, trim the two long résumé guides, then label (Step 3).
+> **Status (2026-09-30):** done. 18 documents labelled by Claude at Moss's request (221 J1 rows, 86 J2 items); scorecard in `docs/research/2026-09-30-baseline-scorecard.md`.
 
-- [ ] **Step 3: Label (Moss, about 1–3 hours)**
+- [x] **Step 3: Label (Moss, about 1–3 hours)**
 
 For each document folder under `data/testsets/<family>/<id>/`:
 
@@ -3262,7 +3262,7 @@ Open the printed `gold.j1` next to `text.txt`, fix every row, then:
 Repeat until it prints `ok`. For transcripts and résumés, do the same with `j2` (syllabi
 need only `j1`).
 
-- [ ] **Step 4: Score the baseline**
+- [x] **Step 4: Score the baseline**
 
 ```bash
 .venv/Scripts/python -m model.eval --solver baseline
@@ -3271,7 +3271,7 @@ need only `j1`).
 Expected: a scorecard with every J1 field, J2 and J3 filled in. Misses are fine: this is
 the bar the model has to beat.
 
-- [ ] **Step 5: Record the results**
+- [x] **Step 5: Record the results**
 
 Copy the scorecard into `docs/research/<today>-baseline-scorecard.md` under a heading, with
 the document counts per family and one line on where the baseline fails most (read the
@@ -3290,7 +3290,7 @@ In `README.md`, change the status line to:
 **Status:** Phase 1 of 6 done (contracts, baselines, eval). Next: Phase 2, tokenizer and model.
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add model/eval/manifest.public.json docs/research README.md

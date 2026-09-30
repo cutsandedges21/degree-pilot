@@ -14,7 +14,7 @@ line, fields separated by ` | `.
 | Record | Fields | Example |
 |---|---|---|
 | `C` course | code, title, term, grade, credits | `C \| ECON 201 \| Intermediate Microeconomics \| Fall 2025 \| A- \| 3.0` |
-| `A` activity | kind, title, org, dates, role | `A \| club \| Economics Society \| Vanier College \| 2024–2025 \| President` |
+| `A` activity | kind, title, org, dates, role | `A \| club \| President \| Economics Society \| 2024–2025 \|` |
 | `B` bullet | text, belonging to the activity above | `B \| Organized 6 speaker events for 120 members` |
 | `D` deliverable | name, weight, due | `D \| Midterm exam \| 25% \| Oct 21` |
 
@@ -25,6 +25,16 @@ line, fields separated by ` | `.
 3. `kind` is one of: job, internship, project, club, volunteer, award, research, sport, other.
 4. When a course shows both a percent and a letter grade, the grade is the letter.
 5. A term printed above a block of courses belongs to every course in the block.
+6. A failed course (Omnivox `EC`) keeps its mark as the grade; its credits stay empty.
+7. An activity's `title` is the position held, or the project or award name; `org` is
+   where; `role` stays empty unless the entry names a separate role.
+8. Not activities: summaries and skills lists, education entries (degree, GPA, coursework,
+   a Dean's List line under a degree), certifications and trainings. Awards and honours
+   are activities (kind `award`) wherever they appear.
+9. A deliverable's `due` is the date its grading row gives. `TBA`, `TBD` or a period name
+   ("Final Exam Period") stays empty. A deliverable repeated in a schedule is not a new one.
+10. When a PDF splits a table cell across lines, copy the part that names the thing
+    (`Group assignment`), since values must be verbatim.
 
 ## J2 tag
 
@@ -37,6 +47,8 @@ Reads one item: a `C` line, or an `A` line with its `B` lines. Writes what it sh
 1. Skill ids and tool names come from `contracts/skills.json` only.
 2. Quotes and tool names appear in the item's text.
 3. Courses need no quotes; activities quote their evidence.
+4. A course gets the skills its title clearly implies; an activity gets the skills its
+   words show. Leave a tag out when unsure: the bar is precision.
 
 Gold files (`gold.j2`): each item's record lines, then its tags indented two spaces, a
 blank line between items.

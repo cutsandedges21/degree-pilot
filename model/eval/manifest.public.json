@@ -1,0 +1,121 @@
+[
+  {
+    "id": "guelph-humber-cv",
+    "family": "resume",
+    "source": "https://www.guelphhumber.ca/sites/default/files/page_files/Sample_CV-new2.pdf",
+    "sha256": "554b87232f005a99eda0801a82b4cdbbb651430fcd7f8389a80f118273cf9607",
+    "note": "Guelph-Humber sample CV"
+  },
+  {
+    "id": "illinois-mary",
+    "family": "resume",
+    "source": "https://www.careercenter.illinois.edu/sites/default/files/2023-03/Sample%20Resumes-Handout.pdf",
+    "sha256": "134a7aa4b36893e62131bcd1ba5b14032e8cc72e056e3b21de0e0769e008bd6f",
+    "note": "U of Illinois Career Center handout, Mary Smith résumé only (text lines 2-41); the second résumé is two-column"
+  },
+  {
+    "id": "wsu-hs-sample",
+    "family": "transcript",
+    "source": "https://s3.wp.wsu.edu/uploads/sites/3144/2022/12/sample-transcript.pdf",
+    "sha256": "41672bbb4a97ba837c69b711ba3c7ef5e0d97c53bf00814847b3420f124ec23a",
+    "note": "WSU sample (high school layout)"
+  },
+  {
+    "id": "york-econ1530-w25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/01/Econ1530N-UPDATED-Course-Outline-Maitra-W2025-Jan9.pdf",
+    "sha256": "0e3631bc70eb7ebc2b8f0d0ba38de3f9ac79cbf98e54b73f961fa0c2a0b08cf7",
+    "note": "York ECON 1530 W25"
+  },
+  {
+    "id": "york-adms4520-f25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/08/F25-ADMS-4520-Course-Outline.pdf",
+    "sha256": "293236631f2e5de9d47091d75db957d3cfd618a34944f0bca896c4ef5a53afa7",
+    "note": "York ADMS 4520 F25"
+  },
+  {
+    "id": "york-econ1010-s25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/06/S2_2025-Econ-1010-Course-Outline.pdf",
+    "sha256": "6602b5813e74b070934334d41fa3e3e2533bfa314060ab163b2569ff3163ea1a",
+    "note": "York ECON 1010 S25"
+  },
+  {
+    "id": "york-adms1000-f25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/08/FA25-ADMS-1000L-Course-Outline.pdf",
+    "sha256": "8e42dafe54fe6ddeef93e2242f2ffcd3b9ffc4aa489eb493180382f6149ffcc4",
+    "note": "York ADMS 1000 F25"
+  },
+  {
+    "id": "york-adms2510-f25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/08/F25-ADMS-2510-Course-Outline.pdf",
+    "sha256": "229b82fddb5fe01719731a94f8e992e8d48510e8f70cc7f48f4dbad54e3a50b1",
+    "note": "York ADMS 2510 F25"
+  },
+  {
+    "id": "york-adms4570-su25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/03/SU25-ADMS-4570-Course-Outline.pdf",
+    "sha256": "eb6110937e36b6372c446e821da51aedcf340ce17528becae6e5e9ecf533810f",
+    "note": "York ADMS 4570 SU25"
+  },
+  {
+    "id": "york-econ3411-su25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2025/05/APECON3411A-Course-outline-Summer-25-S1-1.pdf",
+    "sha256": "46bc626498e4b6a0e8613d74c1166014e622e6b9d18ee9061e6a43e5e3a27ac4",
+    "note": "York ECON 3411 SU25"
+  },
+  {
+    "id": "york-adms4508-w25",
+    "family": "syllabus",
+    "source": "https://course-outlines.laps.yorku.ca/files/2024/12/W25-ADMS-4508-Course-Outline.pdf",
+    "sha256": "d5d35c6c95fcec1614697db39557085415f1212a32414cb62432c2a9dee62dfc",
+    "note": "York ADMS 4508 W25"
+  },
+  {
+    "id": "nysed-sample",
+    "family": "transcript",
+    "source": "https://www.acces.nysed.gov/sites/acces/files/bpss/transcript.pdf",
+    "sha256": "46f173af84cbe99c76eddc14c49c9ffe679253cd8fe78012a3170e769afd3490",
+    "note": "NY State Education Dept sample (vocational school)"
+  },
+  {
+    "id": "uoft-sarah",
+    "family": "resume",
+    "source": "https://www.studentlife.utoronto.ca/wp-content/uploads/CC-Resume-and-Cover-Letter-Toolkit.pdf",
+    "sha256": "64d09fb391804784578101d505deb85a743280da983ae484151aa306082145c1",
+    "note": "U of T Career Centre toolkit, Sarah Newart sample résumé only (text lines 453-519)"
+  },
+  {
+    "id": "uoft-maxwell",
+    "family": "resume",
+    "source": "https://www.studentlife.utoronto.ca/wp-content/uploads/CC-Resume-and-Cover-Letter-Toolkit.pdf",
+    "sha256": "64d09fb391804784578101d505deb85a743280da983ae484151aa306082145c1",
+    "note": "U of T Career Centre toolkit, Maxwell Smith sample résumé only (text lines 557-591)"
+  },
+  {
+    "id": "uoft-winter",
+    "family": "resume",
+    "source": "https://www.studentlife.utoronto.ca/wp-content/uploads/CC-Resume-and-Cover-Letter-Toolkit.pdf",
+    "sha256": "64d09fb391804784578101d505deb85a743280da983ae484151aa306082145c1",
+    "note": "U of T Career Centre toolkit, Winter Keeshig sample résumé only (text lines 634-692)"
+  },
+  {
+    "id": "uoft-jay",
+    "family": "resume",
+    "source": "https://www.studentlife.utoronto.ca/wp-content/uploads/CC-Resume-and-Cover-Letter-Toolkit.pdf",
+    "sha256": "64d09fb391804784578101d505deb85a743280da983ae484151aa306082145c1",
+    "note": "U of T Career Centre toolkit, Jay Lal sample résumé only (text lines 731-770)"
+  },
+  {
+    "id": "uoft-jonathan",
+    "family": "resume",
+    "source": "https://www.studentlife.utoronto.ca/wp-content/uploads/CC-Resume-and-Cover-Letter-Toolkit.pdf",
+    "sha256": "64d09fb391804784578101d505deb85a743280da983ae484151aa306082145c1",
+    "note": "U of T Career Centre toolkit, Jonathan Chang sample résumé only (text lines 809-875)"
+  }
+]
