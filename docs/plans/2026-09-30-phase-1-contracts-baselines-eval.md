@@ -265,7 +265,7 @@ git commit -m "feat(jobs): normalize values for the copy rule and scoring" -m "C
 - Create: `model/jobs/j1.py`
 - Test: `model/tests/test_j1.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_j1.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_j1.py`
 
 ```python
 import pytest
@@ -327,12 +327,12 @@ def test_copy_rule_ignores_activity_kind():
     assert copy_violations(Activity("club", "Chess Club"), "Chess Club, 2024") == []
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_j1.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.jobs.j1'`
 
-- [ ] **Step 3: Write `model/jobs/j1.py`**
+- [x] **Step 3: Write `model/jobs/j1.py`**
 
 ```python
 """J1 extract: document text in, one record per line out.
@@ -447,12 +447,12 @@ def copy_violations(record: Record, source: str) -> list[str]:
     ]
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_j1.py -v`
 Expected: 12 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/jobs/j1.py model/tests/test_j1.py
