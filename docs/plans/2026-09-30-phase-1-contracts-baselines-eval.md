@@ -878,7 +878,7 @@ git commit -m "feat(jobs): add the J2 tag format and gold blocks" -m "Co-Authore
 - Create: `model/jobs/j3.py`
 - Test: `model/tests/test_j3.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_j3.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_j3.py`
 
 ```python
 import pytest
@@ -922,12 +922,12 @@ def test_invented_course_grade_number_and_skill_are_caught():
     assert not check.ok
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_j3.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.jobs.j3'`
 
-- [ ] **Step 3: Write `model/jobs/j3.py`**
+- [x] **Step 3: Write `model/jobs/j3.py`**
 
 ```python
 """J3 explain: facts in, one to three plain sentences out.
@@ -1025,12 +1025,12 @@ def check_explanation(text: str, facts: Facts, taxonomy: Taxonomy) -> Check:
     return Check(tuple(unsupported), used)
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_j3.py -v`
 Expected: 7 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/jobs/j3.py model/tests/test_j3.py
