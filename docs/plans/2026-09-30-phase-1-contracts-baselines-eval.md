@@ -1952,7 +1952,7 @@ as a false negative, so F1 = 2·TP / (2·TP + FP + FN).
 - Create: `model/eval/score_j1.py`
 - Test: `model/tests/test_score_j1.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_score_j1.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_score_j1.py`
 
 ```python
 from model.eval.score_j1 import J1Result, score_j1
@@ -1995,12 +1995,12 @@ def test_results_add_up():
     assert total.fields["C.code"].recall == 0.5
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_score_j1.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.score_j1'`
 
-- [ ] **Step 3: Write `model/eval/score_j1.py`**
+- [x] **Step 3: Write `model/eval/score_j1.py`**
 
 ```python
 """J1 scoring: pair predicted and gold records, then count hits per record type and field."""
@@ -2110,12 +2110,12 @@ def score_j1(predicted_text: str, gold_text: str, source: str) -> J1Result:
     return result
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_score_j1.py -v`
 Expected: 5 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/eval/score_j1.py model/tests/test_score_j1.py
