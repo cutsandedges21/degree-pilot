@@ -1546,7 +1546,7 @@ git commit -m "feat(baselines): extract syllabus deliverables and notes" -m "Co-
 - Create: `model/baselines/tag.py`
 - Test: `model/tests/test_baseline_tag.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_baseline_tag.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_baseline_tag.py`
 
 ```python
 from model.baselines.tag import tag
@@ -1584,12 +1584,12 @@ def test_no_tags_for_non_items():
     assert tag("D | Quiz | 5% |\n", load_taxonomy()) == []
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_tag.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.baselines.tag'`
 
-- [ ] **Step 3: Write `model/baselines/tag.py`**
+- [x] **Step 3: Write `model/baselines/tag.py`**
 
 ```python
 """J2 baseline: keyword lookup against the taxonomy, no model."""
@@ -1627,12 +1627,12 @@ def tag(item_text: str, taxonomy: Taxonomy) -> list[Tag]:
     return tags
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_tag.py -v`
 Expected: 4 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/baselines/tag.py model/tests/test_baseline_tag.py
