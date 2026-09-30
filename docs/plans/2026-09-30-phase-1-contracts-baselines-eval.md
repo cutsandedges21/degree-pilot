@@ -2296,7 +2296,7 @@ the app phase.
 - Create: `model/eval/testset.py`, `model/eval/j3cases.py`
 - Test: `model/tests/test_testset.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_testset.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_testset.py`
 
 ```python
 from model.eval.j3cases import build_cases
@@ -2339,12 +2339,12 @@ def test_cases_from_one_labelled_course():
     assert all(parse_facts(format_facts(case)) == case for case in cases)
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_testset.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.j3cases'`
 
-- [ ] **Step 3: Write `model/eval/testset.py`**
+- [x] **Step 3: Write `model/eval/testset.py`**
 
 The class is `EvalDoc`, not `TestDoc`: pytest would try to collect a class named `Test*`.
 
@@ -2384,7 +2384,7 @@ def load_testset(root: Path | None = None) -> list[EvalDoc]:
     return docs
 ```
 
-- [ ] **Step 4: Write `model/eval/j3cases.py`**
+- [x] **Step 4: Write `model/eval/j3cases.py`**
 
 ```python
 """J3 test inputs built from labelled documents, using a toy career table."""
@@ -2452,12 +2452,12 @@ def build_cases(docs: list[EvalDoc], taxonomy: Taxonomy) -> list[Facts]:
     return cases
 ```
 
-- [ ] **Step 5: Run it to see it pass**
+- [x] **Step 5: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_testset.py -v`
 Expected: 3 passed
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add model/eval/testset.py model/eval/j3cases.py model/tests/test_testset.py
