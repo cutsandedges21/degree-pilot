@@ -1647,7 +1647,7 @@ git commit -m "feat(baselines): tag skills and tools by keyword" -m "Co-Authored
 - Create: `model/baselines/explain.py`
 - Test: `model/tests/test_baseline_explain.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_baseline_explain.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_baseline_explain.py`
 
 ```python
 import pytest
@@ -1683,12 +1683,12 @@ def test_wording():
         "Build a small SQL project with public housing data (3 hours a week). Data Analyst roles ask for SQL.")
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_explain.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.baselines.explain'`
 
-- [ ] **Step 3: Write `model/baselines/explain.py`**
+- [x] **Step 3: Write `model/baselines/explain.py`**
 
 ```python
 """J3 baseline: fill-in templates. Passes the fact check by construction; reads stiffly."""
@@ -1739,12 +1739,12 @@ def explain(facts: Facts) -> str:
     return f"{sentence} {because}." if because else sentence
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_explain.py -v`
 Expected: 4 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/baselines/explain.py model/tests/test_baseline_explain.py
