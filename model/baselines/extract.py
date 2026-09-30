@@ -116,7 +116,43 @@ def _resume(text: str) -> list[Record]:
     return records
 
 
-_EXTRACTORS = {"transcript": _transcript, "resume": _resume}
+_WEIGHT = re.compile(r"(?<![\d.])\d{1,3}(?:\.\d+)?\s?%")
+_DUE = re.compile(
+    rf"{_MONTH}\s+\d{{1,2}}(?:st|nd|rd|th)?(?:,?\s+(?:19|20)\d{{2}})?"
+    rf"|\d{{1,2}}\s+{_MONTH}(?:\s+(?:19|20)\d{{2}})?"
+    r"|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?|Week\s+\d{1,2}",
+    re.IGNORECASE,
+)
+_NAME_EDGE = " \t:.-–—([]•*|"   # no ")" so "Problem sets (5)" keeps its bracket
+_NOT_DELIVERABLES = {"total", "grade", "grades", "grading", "weight"}
+
+
+def _syllabus(text: str) -> list[Record]:
+    records: list[Record] = []
+    for line in text.splitlines():
+        weight = _WEIGHT.search(line)
+        if not weight or float(weight.group(0).rstrip("% ")) > 100:
+            continue
+        before = line[: weight.start()].strip(_NAME_EDGE)
+        name = re.split(r"\t|\s{2,}", before)[-1].strip(_NAME_EDGE) if before else ""
+        if (not re.search(r"[A-Za-z]{2}", name) or _LETTER_GRADE.fullmatch(name)
+                or name.lower() in _NOT_DELIVERABLES or len(name) > 80):
+            continue
+        due = _DUE.search(line[weight.end():]) or _DUE.search(before)
+        records.append(Deliverable(name, weight.group(0), due.group(0) if due else ""))
+    return records
+
+
+def _note(text: str) -> list[Record]:
+    lines = [line.strip().split("|")[0].strip() for line in text.splitlines()]
+    lines = [line for line in lines if line]
+    if not lines:
+        return []
+    return [Activity("other", lines[0]), *(Bullet(line) for line in lines[1:])]
+
+
+_EXTRACTORS = {"transcript": _transcript, "resume": _resume, "syllabus": _syllabus, "note": _note}
+DOC_TYPES = tuple(_EXTRACTORS)
 
 
 def extract(text: str, doc_type: str) -> list[Record]:

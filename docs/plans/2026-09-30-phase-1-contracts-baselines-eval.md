@@ -1439,7 +1439,7 @@ git commit -m "feat(baselines): extract activities and bullets from résumés" -
 - Modify: `model/baselines/extract.py` (add two extractors and register them)
 - Test: `model/tests/test_baseline_extract.py` (append)
 
-- [ ] **Step 1: Append the failing test** to `model/tests/test_baseline_extract.py`
+- [x] **Step 1: Append the failing test** to `model/tests/test_baseline_extract.py`
 
 ```python
 from model.jobs.j1 import Deliverable
@@ -1476,12 +1476,12 @@ def test_note_becomes_one_activity_with_bullets():
     ]
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_extract.py -v`
 Expected: 3 new tests FAIL with `ValueError: unknown doc type`
 
-- [ ] **Step 3: Add the extractors** to `model/baselines/extract.py`, above `_EXTRACTORS`
+- [x] **Step 3: Add the extractors** to `model/baselines/extract.py`, above `_EXTRACTORS`
 
 ```python
 _WEIGHT = re.compile(r"(?<![\d.])\d{1,3}(?:\.\d+)?\s?%")
@@ -1526,12 +1526,12 @@ _EXTRACTORS = {"transcript": _transcript, "resume": _resume, "syllabus": _syllab
 DOC_TYPES = tuple(_EXTRACTORS)
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_extract.py -v`
 Expected: 14 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/baselines/extract.py model/tests/test_baseline_extract.py

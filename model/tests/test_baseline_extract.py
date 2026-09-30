@@ -101,3 +101,37 @@ def test_resume():
 def test_resume_obeys_the_copy_rule():
     for record in extract(RESUME, "resume"):
         assert copy_violations(record, RESUME) == []
+
+
+from model.jobs.j1 import Deliverable
+
+SYLLABUS = """ECON 201 — Intermediate Microeconomics
+Grading
+Problem sets (5)          20%
+Midterm Exam ........... 25%    Oct 21
+Participation (10%)
+Final Exam               45%    Dec 12, 2025
+Total                    100%
+A+  90–100%
+"""
+
+
+def test_syllabus():
+    assert extract(SYLLABUS, "syllabus") == [
+        Deliverable("Problem sets (5)", "20%", ""),
+        Deliverable("Midterm Exam", "25%", "Oct 21"),
+        Deliverable("Participation", "10%", ""),
+        Deliverable("Final Exam", "45%", "Dec 12, 2025"),
+    ]
+
+
+def test_syllabus_obeys_the_copy_rule():
+    for record in extract(SYLLABUS, "syllabus"):
+        assert copy_violations(record, SYLLABUS) == []
+
+
+def test_note_becomes_one_activity_with_bullets():
+    assert extract("Finished my SQL project\nAnalyzed 10k rows of rent data\n", "note") == [
+        Activity("other", "Finished my SQL project"),
+        Bullet("Analyzed 10k rows of rent data"),
+    ]
