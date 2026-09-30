@@ -92,8 +92,14 @@ def run(solver_name: str, testsets: Path | None, samples: int) -> str:
     taxonomy = load_taxonomy()
     solver = get_solver(solver_name)
     docs = load_testset(testsets)
-    j1 = [score_j1(solver.extract(doc.text, doc.family), doc.gold_j1, doc.text)
-          for doc in docs if doc.gold_j1 is not None]
+    j1 = []
+    for doc in docs:
+        if doc.gold_j1 is None:
+            continue
+        try:
+            j1.append(score_j1(solver.extract(doc.text, doc.family), doc.gold_j1, doc.text))
+        except ValueError as error:
+            raise SystemExit(f"{doc.family}/{doc.doc_id}/gold.j1: {error}") from error
     j2 = []
     for doc in docs:
         if doc.gold_j2 is None:

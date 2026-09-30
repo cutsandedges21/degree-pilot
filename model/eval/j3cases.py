@@ -39,9 +39,12 @@ def build_cases(docs: list[EvalDoc], taxonomy: Taxonomy) -> list[Facts]:
         pairs, _ = parse_gold_j2(doc.gold_j2)
         evidence: dict[str, list[str]] = {}
         for item, tags in pairs:
+            text = _evidence(item)
+            if not text:   # an item with no code, title or org can't be cited
+                continue
             for tag in tags:
                 if tag.skill != "tool":
-                    evidence.setdefault(tag.skill, []).append(_evidence(item))
+                    evidence.setdefault(tag.skill, []).append(text)
         for career, skills in CAREERS.items():
             have = [s for s in skills if s in evidence]
             need = [s for s in skills if s not in evidence]

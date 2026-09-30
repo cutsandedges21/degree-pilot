@@ -14,7 +14,7 @@ STYLES = ("why_fit", "gap", "action")
 KEYS = ("career", "skill", "evidence", "have", "need", "tool", "action", "because", "effort")
 
 _CODE = re.compile(r"\b[A-Z]{2,5} ?-?\d{3,4}[A-Z]?\d?\b|\b\d{3}-[A-Z0-9]{3}-[A-Z0-9]{2}\b")
-_NUMBER = re.compile(r"\d+(?:[.,]\d+)?")
+_NUMBER = re.compile(r"(?<![\d.,])\d+(?:[.,]\d+)*(?!\d)")   # whole numbers only: "2" is not in "250"
 _SIGNED_GRADE = re.compile(r"(?<![A-Za-z])[A-D][+-](?![A-Za-z0-9+-])")
 _PLAIN_GRADE = re.compile(r"\b(?i:an?|grade of|got|earned)\s+([A-DF])(?=[\s,.;:)]|$)")
 _TOKEN = re.compile(r"[^\s,;()]+")
@@ -45,7 +45,7 @@ class Check:
 
 def parse_facts(text: str) -> Facts:
     style, items = None, []
-    for line in text.splitlines():
+    for line in text.split("\n"):
         if not line.strip():
             continue
         key, separator, value = line.partition(":")
@@ -56,7 +56,11 @@ def parse_facts(text: str) -> Facts:
             if style is not None or value not in STYLES:
                 raise FactsError(f"bad style line {line!r}")
             style = value
+        elif style is None:
+            raise FactsError("style must come first")
         elif key in KEYS:
+            if key == "evidence" and not any(k == "skill" for k, _ in items):
+                raise FactsError("evidence must follow a skill")
             items.append((key, value))
         else:
             raise FactsError(f"unknown key {key!r}")
@@ -82,7 +86,8 @@ def check_explanation(text: str, facts: Facts, taxonomy: Taxonomy) -> Check:
     fact_tokens = {norm(token) for _, value in facts.items for token in _TOKEN.findall(value)}
     output = norm(text)
     unsupported = [m.group(0) for m in _CODE.finditer(text) if norm(m.group(0)) not in facts_text]
-    unsupported += [number for number in _NUMBER.findall(text) if number not in facts_text]
+    fact_numbers = {number for _, value in facts.items for number in _NUMBER.findall(value)}
+    unsupported += [number for number in _NUMBER.findall(text) if number not in fact_numbers]
     grades = _SIGNED_GRADE.findall(text) + _PLAIN_GRADE.findall(text)
     unsupported += [grade for grade in grades if norm(grade) not in fact_tokens]
     unsupported += [

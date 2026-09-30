@@ -10,7 +10,7 @@ from pathlib import Path
 
 from model.baselines.extract import extract
 from model.baselines.tag import tag
-from model.jobs.j1 import copy_violations, format_records, parse_records
+from model.jobs.j1 import Activity, copy_violations, format_records, parse_records
 from model.jobs.j2 import format_gold_j2, items_from_records, parse_gold_j2, tag_violations
 from model.jobs.skills import load_taxonomy
 
@@ -67,8 +67,10 @@ def check(doc_dir: Path) -> list[str]:
         problems += [f"gold.j2 {error}" for error in errors]
         for item, tags in pairs:
             label = getattr(item.records[0], "title", "")
+            activity = isinstance(item.records[0], Activity)
             for t in tags:
-                problems += [f"gold.j2 {label}: {problem}" for problem in tag_violations(t, item.text, taxonomy)]
+                problems += [f"gold.j2 {label}: {problem}"
+                             for problem in tag_violations(t, item.text, taxonomy, activity)]
     return problems
 
 

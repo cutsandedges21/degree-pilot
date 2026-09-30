@@ -11,7 +11,7 @@ Normalizing grades, dates and credits is deterministic code's job, not J1's.
 from dataclasses import dataclass, fields
 from typing import ClassVar
 
-from model.jobs.normalize import contains
+from model.jobs.normalize import contains_words
 
 ACTIVITY_KINDS = ("job", "internship", "project", "club", "volunteer", "award", "research", "sport", "other")
 
@@ -87,7 +87,7 @@ def parse_record(line: str) -> Record:
 def parse_records(text: str) -> tuple[list[Record], list[str]]:
     """Records, plus one message per bad line. Blank lines and # comments are skipped."""
     records, errors = [], []
-    for number, line in enumerate(text.splitlines(), 1):
+    for number, line in enumerate(text.split("\n"), 1):   # not splitlines(): values may hold \x0c
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         try:
@@ -102,9 +102,10 @@ def format_records(records: list[Record]) -> str:
 
 
 def copy_violations(record: Record, source: str) -> list[str]:
-    """Values in `record` that don't appear in `source`. An activity's kind is a label, not a copy."""
+    """Values in `record` that don't appear in `source` as whole words (short values must
+    also match case). An activity's kind is a label, not a copy."""
     return [
         f"{name}={getattr(record, name)!r}"
         for name in field_names(record)
-        if name != "kind" and getattr(record, name) and not contains(source, getattr(record, name))
+        if name != "kind" and getattr(record, name) and not contains_words(source, getattr(record, name), match_case_if_short=True)
     ]

@@ -10,7 +10,7 @@ spaces, with a blank line between items.
 from dataclasses import dataclass
 
 from model.jobs.j1 import Activity, Bullet, Course, Record, RecordError, format_records, parse_record
-from model.jobs.normalize import contains, norm
+from model.jobs.normalize import contains_words, norm
 from model.jobs.skills import Taxonomy
 
 
@@ -54,7 +54,7 @@ def parse_tag(line: str) -> Tag:
 
 def parse_tags(text: str) -> tuple[list[Tag], list[str]]:
     tags, errors = [], []
-    for number, line in enumerate(text.splitlines(), 1):
+    for number, line in enumerate(text.split("\n"), 1):
         if not line.strip():
             continue
         try:
@@ -88,7 +88,7 @@ def items_from_records(records: list[Record]) -> list[Item]:
 
 def parse_gold_j2(text: str) -> tuple[list[tuple[Item, list[Tag]]], list[str]]:
     records, tags_under, errors = [], {}, []
-    for number, line in enumerate(text.splitlines(), 1):
+    for number, line in enumerate(text.split("\n"), 1):
         if not line.strip() or line.lstrip().startswith("#"):
             continue
         try:
@@ -116,13 +116,19 @@ def format_gold_j2(pairs: list[tuple[Item, list[Tag]]]) -> str:
     return "\n".join(item.text + "".join(f"  {format_tag(tag)}\n" for tag in tags) for item, tags in pairs)
 
 
-def tag_violations(tag: Tag, source: str, taxonomy: Taxonomy) -> list[str]:
+def tag_violations(tag: Tag, source: str, taxonomy: Taxonomy, activity: bool = False) -> list[str]:
+    """Problems with one tag. Tool names and quotes must appear as whole words, and an
+    activity's skill tags must quote their evidence (contract J2 rules 2 and 3)."""
     problems = []
     if tag.skill == "tool":
         if norm(tag.value) not in {norm(tool) for tool in taxonomy.tools}:
             problems.append(f"unknown tool {tag.value!r}")
     elif tag.skill not in taxonomy.skill_ids:
         problems.append(f"unknown skill {tag.skill!r}")
-    if tag.value and not contains(source, tag.value):
+    elif activity and not tag.value:
+        problems.append("activity tags need a quote from the item")
+    if tag.value and len(norm(tag.value)) < 2:
+        problems.append(f"quote {tag.value!r} is too short")
+    elif tag.value and not contains_words(source, tag.value):
         problems.append(f"{tag.value!r} is not in the input")
     return problems

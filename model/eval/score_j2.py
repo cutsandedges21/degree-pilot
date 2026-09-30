@@ -2,6 +2,7 @@
 from dataclasses import dataclass, field
 
 from model.eval.score_j1 import Counts
+from model.jobs.j1 import Activity
 from model.jobs.j2 import Item, Tag, parse_tags, tag_violations
 from model.jobs.skills import Taxonomy
 
@@ -21,7 +22,8 @@ class J2Result:
 
 def score_j2(predicted_text: str, gold_tags: list[Tag], item: Item, taxonomy: Taxonomy) -> J2Result:
     predicted, errors = parse_tags(predicted_text)
-    bad = len(errors) + sum(1 for tag in predicted if tag_violations(tag, item.text, taxonomy))
+    activity = isinstance(item.records[0], Activity)
+    bad = len(errors) + sum(1 for tag in predicted if tag_violations(tag, item.text, taxonomy, activity))
     p = {tag.key for tag in predicted}
     g = {tag.key for tag in gold_tags}
     return J2Result(Counts(len(p & g), len(p - g), len(g - p)), 1, bad)
