@@ -3304,7 +3304,7 @@ git commit -m "docs: record the baseline scorecard on real documents" -m "Co-Aut
 Per the spec, each phase ends with a two-agent review on Sonnet, sized for the Pro plan's
 five-hour limit.
 
-- [ ] **Step 1: Run the review workflow**
+- [x] **Step 1: Run the review workflow**
 
 Launch a Workflow with two read-only agents (`model: 'sonnet'`, `effort: 'medium'`),
 each returning `{findings: [{file, line, problem, fix, severity}]}`:
@@ -3319,7 +3319,7 @@ each returning `{findings: [{file, line, problem, fix, severity}]}`:
    emit, labels that are ambiguous, test sets too small or too uniform. Read-only. At most
    6 findings, most severe first."
 
-- [ ] **Step 2: Fix what holds up**
+- [x] **Step 2: Fix what holds up**
 
 Verify each finding against the code before changing anything. Fix the real ones with a
 test first, run `.venv/Scripts/python -m pytest -q`, and commit each fix separately.
