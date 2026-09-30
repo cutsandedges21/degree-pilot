@@ -3219,7 +3219,7 @@ family** (spec), so roughly 5 transcripts, 10 résumés and 10 syllabi.
 - Create: `model/eval/manifest.public.json`, `docs/research/<date>-baseline-scorecard.md`
 - Modify: `README.md` (status line)
 
-- [ ] **Step 1: Find public documents (Claude)**
+- [x] **Step 1: Find public documents (Claude)**
 
 Web-search for PDFs with a text layer, and note each URL:
 - Transcripts: `"sample transcript" registrar pdf` for US and Canadian universities; `relevé de notes cégep exemple` and `CEGEP transcript sample` for Quebec.
@@ -3228,7 +3228,7 @@ Web-search for PDFs with a text layer, and note each URL:
 
 Skip anything behind a login, and anything that is a scanned image (`intake` will refuse it).
 
-- [ ] **Step 2: Intake each document**
+- [x] **Step 2: Intake each document**
 
 ```bash
 .venv/Scripts/python -m model.eval.intake transcript "<url>" --id <short-name> --note "<school, page it came from>"
@@ -3242,6 +3242,8 @@ résumé as PDF, then:
 ```bash
 .venv/Scripts/python -m model.eval.intake transcript "C:/path/to/transcript.pdf" --id moss-vanier
 ```
+
+> **Status (2026-09-30):** 15 public documents are in `data/testsets/` with draft `gold.j1` files (5 résumés, 8 York syllabi, 2 transcript samples). Next is Moss: add their own transcript and résumé, trim the two long résumé guides, then label (Step 3).
 
 - [ ] **Step 3: Label (Moss, about 1–3 hours)**
 
