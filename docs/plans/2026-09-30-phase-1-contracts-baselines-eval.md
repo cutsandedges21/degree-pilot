@@ -1129,7 +1129,7 @@ git commit -m "docs(contracts): write down the three job formats" -m "Co-Authore
 - Create: `model/baselines/__init__.py`, `model/baselines/extract.py`
 - Test: `model/tests/test_baseline_extract.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_baseline_extract.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_baseline_extract.py`
 
 These fixtures are made up, and only tests see them. Real test documents come in Task 23.
 
@@ -1204,12 +1204,12 @@ def test_transcripts_obey_the_copy_rule(text):
         assert copy_violations(record, text) == []
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_extract.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.baselines'`
 
-- [ ] **Step 3: Write the code**
+- [x] **Step 3: Write the code**
 
 `model/baselines/__init__.py`:
 
@@ -1285,12 +1285,12 @@ def extract(text: str, doc_type: str) -> list[Record]:
     return _EXTRACTORS[doc_type](text)
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_extract.py -v`
 Expected: 9 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/baselines model/tests/test_baseline_extract.py
