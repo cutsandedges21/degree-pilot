@@ -646,7 +646,7 @@ git commit -m "feat(jobs): add the skill taxonomy J2 tags against" -m "Co-Author
 - Create: `model/jobs/j2.py`
 - Test: `model/tests/test_j2.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_j2.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_j2.py`
 
 ```python
 import pytest
@@ -720,12 +720,12 @@ def test_tag_violations():
     assert tag_violations(Tag("tool", "Notepad"), source + "Notepad", taxonomy) == ["unknown tool 'Notepad'"]
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_j2.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.jobs.j2'`
 
-- [ ] **Step 3: Write `model/jobs/j2.py`**
+- [x] **Step 3: Write `model/jobs/j2.py`**
 
 ```python
 """J2 tag: one item (a course, or an activity with its bullets) in, what it shows out.
@@ -858,12 +858,12 @@ def tag_violations(tag: Tag, source: str, taxonomy: Taxonomy) -> list[str]:
     return problems
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_j2.py -v`
 Expected: 9 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/jobs/j2.py model/tests/test_j2.py
