@@ -1762,7 +1762,7 @@ model will be another solver with the same three methods.
 - Create: `model/solvers.py`
 - Test: `model/tests/test_solvers.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_solvers.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_solvers.py`
 
 ```python
 import pytest
@@ -1784,12 +1784,12 @@ def test_unknown_solver():
         get_solver("gpt")
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_solvers.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.solvers'`
 
-- [ ] **Step 3: Write `model/solvers.py`**
+- [x] **Step 3: Write `model/solvers.py`**
 
 ```python
 """Solvers answer J1–J3 in the wire formats. The baseline is rules; the model comes later."""
@@ -1839,12 +1839,12 @@ def get_solver(name: str) -> Solver:
     return SOLVERS[name]()
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_solvers.py -v`
 Expected: 2 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/solvers.py model/tests/test_solvers.py
