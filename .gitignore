@@ -1,0 +1,20 @@
+# Local data: large and regenerable. Heavy training data lives in Kaggle datasets.
+data/
+*.parquet
+*.pt
+*.onnx
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Node
+node_modules/
+dist/
+
+# Secrets
+.env
+.env.*
+kaggle.json
