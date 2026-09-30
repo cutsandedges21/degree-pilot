@@ -2865,7 +2865,7 @@ Moss corrects it in the editor, then runs `check`.
 - Create: `model/eval/label.py`
 - Test: `model/tests/test_label.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_label.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_label.py`
 
 ```python
 from model.eval.label import check, main, prefill_j1, prefill_j2
@@ -2912,12 +2912,12 @@ def test_check_passes_prefilled_files(tmp_path, capsys):
     assert capsys.readouterr().out.strip() == "ok"
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_label.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.label'`
 
-- [ ] **Step 3: Write `model/eval/label.py`**
+- [x] **Step 3: Write `model/eval/label.py`**
 
 ```python
 """Label test documents: prefill gold files from the baseline, then check them after editing.
@@ -3014,12 +3014,12 @@ if __name__ == "__main__":
     sys.exit(main())
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_label.py -v`
 Expected: 4 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/eval/label.py model/tests/test_label.py
