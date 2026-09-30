@@ -2217,7 +2217,7 @@ git commit -m "feat(eval): score J2 by tag keys" -m "Co-Authored-By: Claude Opus
 - Create: `model/eval/score_j3.py`
 - Test: `model/tests/test_score_j3.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_score_j3.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_score_j3.py`
 
 ```python
 from model.eval.score_j3 import J3Result, score_j3
@@ -2234,12 +2234,12 @@ def test_pass_and_fail():
     assert total.failures == [("Build a SQL project in 9 hours.", ("9",))]
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_score_j3.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval.score_j3'`
 
-- [ ] **Step 3: Write `model/eval/score_j3.py`**
+- [x] **Step 3: Write `model/eval/score_j3.py`**
 
 ```python
 """J3 scoring: does each explanation pass the fact check?"""
@@ -2271,12 +2271,12 @@ def score_j3(text: str, facts: Facts, taxonomy: Taxonomy) -> J3Result:
     return J3Result(1, int(check.ok), check.used, [] if check.ok else [(text, check.unsupported)])
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_score_j3.py -v`
 Expected: 1 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/eval/score_j3.py model/tests/test_score_j3.py
