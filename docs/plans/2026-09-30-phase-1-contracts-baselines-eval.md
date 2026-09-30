@@ -1862,7 +1862,7 @@ a score could move with a different set of documents.
 - Create: `model/eval/__init__.py`, `model/eval/bootstrap.py`
 - Test: `model/tests/test_bootstrap.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_bootstrap.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_bootstrap.py`
 
 ```python
 import math
@@ -1890,12 +1890,12 @@ def test_empty_units_give_nan():
     assert math.isnan(low) and math.isnan(high)
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_bootstrap.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.eval'`
 
-- [ ] **Step 3: Write the code**
+- [x] **Step 3: Write the code**
 
 `model/eval/__init__.py`:
 
@@ -1928,12 +1928,12 @@ def bootstrap_ci(units: Sequence, statistic: Callable[[list], float], n: int = 1
     return values[int(alpha / 2 * (len(values) - 1))], values[round((1 - alpha / 2) * (len(values) - 1))]
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_bootstrap.py -v`
 Expected: 3 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/eval model/tests/test_bootstrap.py
