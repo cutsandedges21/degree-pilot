@@ -1,7 +1,8 @@
 """J1 baseline: regular expressions, no model."""
 import re
+from dataclasses import replace
 
-from model.jobs.j1 import Activity, Bullet, Course, Deliverable, Record
+from model.jobs.j1 import Activity, Bullet, Course, Deliverable, Record, field_names
 
 _SEASON = r"(?:Fall|Autumn|Winter|Spring|Summer|Automne|Hiver|Été|Ete|Printemps)"
 _TERM = (
@@ -89,30 +90,64 @@ def _activity(line: str, dates: re.Match, section: str) -> Activity:
                     dates.group(0).strip(), "")
 
 
+_HEADING_KINDS = (
+    ("volunteer", "volunteer"), ("leadership", "club"), ("activit", "club"), ("extracurricular", "club"),
+    ("project", "project"), ("award", "award"), ("honour", "award"), ("honor", "award"),
+    ("research", "research"), ("athletic", "sport"), ("sport", "sport"),
+    ("experience", "job"), ("employment", "job"), ("work", "job"),
+)
+_SKIPPED_HEADINGS = ("education", "skill", "interest", "reference", "certification", "language",
+                     "course", "summary", "profile", "qualification")
+
+
+def _heading(line: str) -> tuple[bool, str | None]:
+    """Is this line a section heading, and what kind of entries follow it (None: skip them)?
+    Known headings match exactly; any other short all-caps line without digits is a heading
+    whose kind comes from its words ("ADMINISTRATIVE EXPERIENCE" -> job)."""
+    key = line.rstrip(":").lower()
+    if key in _SECTIONS:
+        return True, _SECTIONS[key]
+    if len(line) > 40 or not line.isupper() or any(ch.isdigit() for ch in line):
+        return False, None
+    if any(word in key for word in _SKIPPED_HEADINGS):
+        return True, None
+    return True, next((kind for word, kind in _HEADING_KINDS if word in key), "other")
+
+
+def _is_wrap(line: str) -> bool:
+    """A wrapped bullet's next line starts lowercase and isn't a table row or contact line."""
+    return line[0].islower() and "|" not in line and "\t" not in line
+
+
 def _resume(text: str) -> list[Record]:
     records: list[Record] = []
     section: str | None = "other"
+    wrapping = False   # the last record is a bullet that the next line may continue
     for line in text.splitlines():
         stripped = line.strip()
         if not stripped:
             continue
-        heading = stripped.rstrip(":").lower()
-        if heading in _SECTIONS:
-            section = _SECTIONS[heading]
+        is_heading, kind = _heading(stripped)
+        if is_heading:
+            section, wrapping = kind, False
             continue
         if section is None:
             continue
         bullet = _BULLET.match(line)
         if bullet:
             text_part = bullet.group("text").split("|")[0].strip()
-            if text_part and records and isinstance(records[-1], (Activity, Bullet)):
+            wrapping = bool(text_part) and bool(records) and isinstance(records[-1], (Activity, Bullet))
+            if wrapping:
                 records.append(Bullet(text_part))
             continue
         dates = _DATES.search(stripped)
         if dates:
             records.append(_activity(stripped, dates, section))
-        elif records and isinstance(records[-1], Bullet):
-            records[-1] = Bullet(f"{records[-1].text} {stripped}")  # a wrapped bullet
+            wrapping = False
+        elif wrapping and _is_wrap(stripped):
+            records[-1] = Bullet(f"{records[-1].text} {stripped}")
+        else:
+            wrapping = False
     return records
 
 
@@ -158,4 +193,12 @@ DOC_TYPES = tuple(_EXTRACTORS)
 def extract(text: str, doc_type: str) -> list[Record]:
     if doc_type not in _EXTRACTORS:
         raise ValueError(f"unknown doc type {doc_type!r}; expected one of {tuple(_EXTRACTORS)}")
-    return _EXTRACTORS[doc_type](text)
+    return [_without_separators(record) for record in _EXTRACTORS[doc_type](text)]
+
+
+def _without_separators(record: Record) -> Record:
+    """Cut any value at a stray '|' (a table rule or contact line): the part before it is
+    still a verbatim copy, and the record stays writable."""
+    cut = {name: getattr(record, name).split("|")[0].strip()
+           for name in field_names(record) if "|" in getattr(record, name)}
+    return replace(record, **cut) if cut else record

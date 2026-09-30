@@ -135,3 +135,30 @@ def test_note_becomes_one_activity_with_bullets():
         Activity("other", "Finished my SQL project"),
         Bullet("Analyzed 10k rows of rent data"),
     ]
+
+
+def test_resume_bullets_only_absorb_wrapped_lines_and_unknown_caps_headings_start_sections():
+    text = (
+        "EXPERIENCE\n"
+        "Research Assistant, Psychology Lab    Sep 2024 – Apr 2025\n"
+        "• Recorded interview data in Excel documents, ensuring\n"
+        "  accuracy before transfer to SPSS\n"
+        "Need more help? Visit us in GH108 | Call: 416-798-1331\n"
+        "  later lowercase text that is not a wrap\n"
+        "ADMINISTRATIVE EXPERIENCE\n"
+        "Office Assistant, Registrar    May 2024 – Aug 2024\n"
+    )
+    assert extract(text, "resume") == [
+        Activity("research", "Research Assistant", "Psychology Lab", "Sep 2024 – Apr 2025", ""),
+        Bullet("Recorded interview data in Excel documents, ensuring accuracy before transfer to SPSS"),
+        Activity("job", "Office Assistant", "Registrar", "May 2024 – Aug 2024", ""),
+    ]
+
+
+def test_extracted_values_never_hold_the_field_separator():
+    from model.jobs.j1 import format_records
+
+    text = "ECON 101 Principles | Micro 3.00 A\n"
+    records = extract(text, "transcript")
+    assert records[0].title == "Principles"
+    format_records(records)  # would raise on a '|' inside a value
