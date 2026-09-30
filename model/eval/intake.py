@@ -10,8 +10,10 @@ import hashlib
 import json
 import re
 import shutil
+import ssl
 import subprocess
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -19,6 +21,7 @@ from model.eval.testset import FAMILIES
 from model.paths import REPO_ROOT, testsets_dir
 
 PDFTEXT = REPO_ROOT / "tools" / "pdftext" / "extract.mjs"
+USER_AGENT = "degreepilot-testset/0.1"
 
 
 def slug(name: str) -> str:
@@ -35,12 +38,21 @@ def pdf_to_text(pdf: Path) -> str:
 
 
 def _fetch(source: str, target: Path) -> None:
-    if source.startswith(("http://", "https://")):
-        request = urllib.request.Request(source, headers={"User-Agent": "degreepilot-testset/0.1"})
+    if not source.startswith(("http://", "https://")):
+        shutil.copyfile(source, target)
+        return
+    request = urllib.request.Request(source, headers={"User-Agent": USER_AGENT})
+    try:
         with urllib.request.urlopen(request, timeout=60) as response:
             target.write_bytes(response.read())
-    else:
-        shutil.copyfile(source, target)
+    except urllib.error.URLError as error:
+        # Some university servers send an incomplete certificate chain. Python can't
+        # complete it; curl on Windows checks against the system store, which can.
+        # Verification stays on either way.
+        if not isinstance(error.reason, ssl.SSLCertVerificationError) or not shutil.which("curl"):
+            raise
+        subprocess.run(["curl", "--fail", "--silent", "--show-error", "--location",
+                        "--user-agent", USER_AGENT, "-o", str(target), source], check=True)
 
 
 def intake(family: str, source: str, doc_id: str | None = None, note: str = "", root: Path | None = None) -> Path:

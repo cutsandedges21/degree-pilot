@@ -55,3 +55,28 @@ def test_intake_pdf_extracts_text(tmp_path):
     pdf.write_bytes(_minimal_pdf("ECON 101 Principles"))
     doc = intake("transcript", str(pdf), root=tmp_path / "t")
     assert (doc / "text.txt").read_text(encoding="utf-8").strip() == "ECON 101 Principles"
+
+
+def test_fetch_falls_back_to_curl_when_the_certificate_chain_is_incomplete(tmp_path, monkeypatch):
+    import ssl
+    import urllib.error
+    from pathlib import Path
+
+    from model.eval import intake as intake_module
+
+    def refuse(*args, **kwargs):
+        raise urllib.error.URLError(ssl.SSLCertVerificationError("unable to get local issuer certificate"))
+
+    calls = []
+
+    def fake_run(command, check):
+        calls.append(command)
+        Path(command[command.index("-o") + 1]).write_bytes(b"hello")
+
+    monkeypatch.setattr(intake_module.urllib.request, "urlopen", refuse)
+    monkeypatch.setattr(intake_module.subprocess, "run", fake_run)
+    monkeypatch.setattr(intake_module.shutil, "which", lambda name: "curl")
+    target = tmp_path / "doc.txt"
+    intake_module._fetch("https://example.org/doc.txt", target)
+    assert target.read_bytes() == b"hello"
+    assert calls[0][0] == "curl" and "--fail" in calls[0]
