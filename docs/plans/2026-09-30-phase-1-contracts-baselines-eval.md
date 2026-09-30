@@ -1305,7 +1305,7 @@ git commit -m "feat(baselines): extract courses from US, Canadian and CEGEP tran
 - Modify: `model/baselines/extract.py` (add the résumé extractor and register it)
 - Test: `model/tests/test_baseline_extract.py` (append)
 
-- [ ] **Step 1: Append the failing test** to `model/tests/test_baseline_extract.py`
+- [x] **Step 1: Append the failing test** to `model/tests/test_baseline_extract.py`
 
 ```python
 from model.jobs.j1 import Activity, Bullet
@@ -1343,12 +1343,12 @@ def test_resume_obeys_the_copy_rule():
         assert copy_violations(record, RESUME) == []
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_extract.py -v`
 Expected: 2 new tests FAIL with `ValueError: unknown doc type 'resume'`
 
-- [ ] **Step 3: Add the résumé extractor** to `model/baselines/extract.py`, above `_EXTRACTORS`
+- [x] **Step 3: Add the résumé extractor** to `model/baselines/extract.py`, above `_EXTRACTORS`
 
 ```python
 _MONTH = r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?"
@@ -1419,12 +1419,12 @@ Then replace the `_EXTRACTORS` line with:
 _EXTRACTORS = {"transcript": _transcript, "resume": _resume}
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_baseline_extract.py -v`
 Expected: 11 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/baselines/extract.py model/tests/test_baseline_extract.py

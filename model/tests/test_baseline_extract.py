@@ -66,3 +66,38 @@ def test_unknown_doc_type():
 def test_transcripts_obey_the_copy_rule(text):
     for record in extract(text, "transcript"):
         assert copy_violations(record, text) == []
+
+
+from model.jobs.j1 import Activity, Bullet
+
+RESUME = """Jordan Lee
+jordan@example.com
+
+EXPERIENCE
+Data Analyst Intern, Shopify    May 2025 – Aug 2025
+• Built SQL dashboards tracking weekly
+  sales for 3 regions
+• Presented findings to the marketing team
+
+LEADERSHIP
+President, Economics Society    Sep 2024 – Present
+- Organized 6 speaker events for 120 members
+
+SKILLS
+Excel, SQL, Python
+"""
+
+
+def test_resume():
+    assert extract(RESUME, "resume") == [
+        Activity("internship", "Data Analyst Intern", "Shopify", "May 2025 – Aug 2025", ""),
+        Bullet("Built SQL dashboards tracking weekly sales for 3 regions"),
+        Bullet("Presented findings to the marketing team"),
+        Activity("club", "President", "Economics Society", "Sep 2024 – Present", ""),
+        Bullet("Organized 6 speaker events for 120 members"),
+    ]
+
+
+def test_resume_obeys_the_copy_rule():
+    for record in extract(RESUME, "resume"):
+        assert copy_violations(record, RESUME) == []

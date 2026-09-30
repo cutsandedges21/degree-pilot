@@ -54,7 +54,69 @@ def _transcript(text: str) -> list[Record]:
     return records
 
 
-_EXTRACTORS = {"transcript": _transcript}
+_MONTH = r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\.?"
+_WHEN = rf"(?:(?:{_MONTH}\s+)?(?:19|20)\d{{2}}|Present|Current|Now)"
+_DATES = re.compile(
+    rf"{_WHEN}\s*(?:[-–—]|to)\s*{_WHEN}|{_MONTH}\s+(?:19|20)\d{{2}}|(?<!\d)(?:19|20)\d{{2}}(?!\d)",
+    re.IGNORECASE,
+)
+_BULLET = re.compile(r"^\s*[•·▪◦●*–-]\s+(?P<text>\S.*)$")
+_SPLIT = re.compile(r"\s+(?:at|@)\s+|\s*[|,]\s*|\s+[–—-]\s+|\t|\s{2,}")
+_SECTIONS = {
+    "experience": "job", "work experience": "job", "employment": "job", "professional experience": "job",
+    "projects": "project", "leadership": "club", "activities": "club", "extracurricular activities": "club",
+    "extracurriculars": "club", "volunteer": "volunteer", "volunteering": "volunteer",
+    "volunteer experience": "volunteer", "awards": "award", "honors": "award", "honours": "award",
+    "awards and honours": "award", "research": "research", "research experience": "research",
+    "athletics": "sport", "sports": "sport",
+    "education": None, "skills": None, "interests": None, "references": None, "certifications": None,
+}
+_KIND_WORDS = (
+    (r"intern(?:ship)?s?", "internship"), (r"volunteer(?:s|ing)?", "volunteer"), (r"president", "club"),
+    (r"captain", "sport"), (r"club", "club"), (r"society", "club"), (r"association", "club"),
+    (r"council", "club"), (r"research", "research"), (r"project", "project"), (r"award", "award"),
+    (r"scholarship", "award"),
+)
+
+
+def _activity(line: str, dates: re.Match, section: str) -> Activity:
+    # Two spaces keep the text before and after the dates in separate parts.
+    head = f"{line[: dates.start()]}  {line[dates.end():]}".strip(" \t|,–—-")
+    parts = [part.strip() for part in _SPLIT.split(head) if part.strip()]
+    lowered = head.lower()
+    kind = next((k for pattern, k in _KIND_WORDS if re.search(rf"\b{pattern}\b", lowered)), section)
+    return Activity(kind, parts[0] if parts else "", parts[1] if len(parts) > 1 else "",
+                    dates.group(0).strip(), "")
+
+
+def _resume(text: str) -> list[Record]:
+    records: list[Record] = []
+    section: str | None = "other"
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        heading = stripped.rstrip(":").lower()
+        if heading in _SECTIONS:
+            section = _SECTIONS[heading]
+            continue
+        if section is None:
+            continue
+        bullet = _BULLET.match(line)
+        if bullet:
+            text_part = bullet.group("text").split("|")[0].strip()
+            if text_part and records and isinstance(records[-1], (Activity, Bullet)):
+                records.append(Bullet(text_part))
+            continue
+        dates = _DATES.search(stripped)
+        if dates:
+            records.append(_activity(stripped, dates, section))
+        elif records and isinstance(records[-1], Bullet):
+            records[-1] = Bullet(f"{records[-1].text} {stripped}")  # a wrapped bullet
+    return records
+
+
+_EXTRACTORS = {"transcript": _transcript, "resume": _resume}
 
 
 def extract(text: str, doc_type: str) -> list[Record]:
