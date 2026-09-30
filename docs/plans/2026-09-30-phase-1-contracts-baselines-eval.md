@@ -10,6 +10,8 @@
 
 **Spec:** `docs/specs/2026-09-30-degreepilot-design.md` (sections "The model's three jobs" and "Verification").
 
+**Execution:** inline, on branch `phase-1`. Each finished step is ticked (`- [x]`) and committed with its task. To resume after a break, start at the first unticked step.
+
 ---
 
 ## File structure
@@ -63,7 +65,7 @@ Every commit message ends with the trailer `Co-Authored-By: Claude Opus 5.5 <nor
 - Create: `pyproject.toml`, `.gitattributes`, `model/__init__.py`, `model/paths.py`
 - Test: `model/tests/test_paths.py`
 
-- [ ] **Step 1: Create the venv and install pytest**
+- [x] **Step 1: Create the venv and install pytest**
 
 ```bash
 python -m venv .venv
@@ -72,7 +74,7 @@ python -m venv .venv
 
 Expected: `Successfully installed ... pytest-8.x`
 
-- [ ] **Step 2: Write `pyproject.toml` and `.gitattributes`**
+- [x] **Step 2: Write `pyproject.toml` and `.gitattributes`**
 
 ```toml
 [project]
@@ -96,7 +98,7 @@ pythonpath = ["."]
 *.png binary
 ```
 
-- [ ] **Step 3: Write the failing test** `model/tests/test_paths.py`
+- [x] **Step 3: Write the failing test** `model/tests/test_paths.py`
 
 ```python
 from model import paths
@@ -117,12 +119,12 @@ def test_contracts_dir_is_in_repo():
     assert paths.CONTRACTS_DIR == paths.REPO_ROOT / "contracts"
 ```
 
-- [ ] **Step 4: Run it to see it fail**
+- [x] **Step 4: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_paths.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model'`
 
-- [ ] **Step 5: Write `model/__init__.py` and `model/paths.py`**
+- [x] **Step 5: Write `model/__init__.py` and `model/paths.py`**
 
 `model/__init__.py`:
 
@@ -154,12 +156,12 @@ def testsets_dir() -> Path:
     return data_dir() / "testsets"
 ```
 
-- [ ] **Step 6: Run it to see it pass**
+- [x] **Step 6: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest -v`
 Expected: 3 passed
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add pyproject.toml .gitattributes model/__init__.py model/paths.py model/tests/test_paths.py
