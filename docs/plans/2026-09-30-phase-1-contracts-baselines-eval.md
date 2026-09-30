@@ -1044,7 +1044,7 @@ git commit -m "feat(jobs): add the J3 facts format and fact check" -m "Co-Author
 **Files:**
 - Create: `contracts/jobs.md`
 
-- [ ] **Step 1: Write `contracts/jobs.md`**
+- [x] **Step 1: Write `contracts/jobs.md`**
 
 ````markdown
 # Job contracts
@@ -1114,7 +1114,7 @@ Reads `key: value` facts and writes one to three plain sentences.
     <|job:explain|><|in|>…facts…<|out|>…sentences…<|end|>
 ````
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add contracts/jobs.md
