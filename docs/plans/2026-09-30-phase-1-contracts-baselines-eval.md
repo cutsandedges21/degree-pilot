@@ -176,7 +176,7 @@ git commit -m "chore: add the Python project and data paths" -m "Co-Authored-By:
 - Create: `model/jobs/__init__.py`, `model/jobs/normalize.py`
 - Test: `model/tests/test_normalize.py`
 
-- [ ] **Step 1: Write the failing test** `model/tests/test_normalize.py`
+- [x] **Step 1: Write the failing test** `model/tests/test_normalize.py`
 
 ```python
 from model.jobs.normalize import contains, norm
@@ -206,12 +206,12 @@ def test_contains_across_line_breaks():
     assert not contains("ECON 201", "ECON 202")
 ```
 
-- [ ] **Step 2: Run it to see it fail**
+- [x] **Step 2: Run it to see it fail**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_normalize.py -v`
 Expected: FAIL, `ModuleNotFoundError: No module named 'model.jobs'`
 
-- [ ] **Step 3: Write the code**
+- [x] **Step 3: Write the code**
 
 `model/jobs/__init__.py`:
 
@@ -245,12 +245,12 @@ def contains(haystack: str, needle: str) -> bool:
     return norm(needle) in norm(haystack)
 ```
 
-- [ ] **Step 4: Run it to see it pass**
+- [x] **Step 4: Run it to see it pass**
 
 Run: `.venv/Scripts/python -m pytest model/tests/test_normalize.py -v`
 Expected: 5 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add model/jobs model/tests/test_normalize.py
